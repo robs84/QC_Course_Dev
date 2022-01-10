@@ -14,6 +14,8 @@
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -38,6 +40,7 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Coding Exercise Directions</span></p>
 <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="README.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Entanglement.html">Entanglement</a></li>
 <li class="toctree-l1"><a class="reference internal" href="States.html">States</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Teleportation.html">Teleportation</a></li>
@@ -75,33 +78,45 @@
   <div class="tex2jax_ignore mathjax_ignore section" id="deutsch-jozsa">
 <h1>Deutsch-Jozsa<a class="headerlink" href="#deutsch-jozsa" title="Permalink to this headline"></a></h1>
 <hr class="docutils" />
+<p>Consider a number between zero and <span class="math notranslate nohighlight">\(2^{n}-1\)</span>.  Then consider a function that can take that number as an input that will either always return a constant regardless of the input or will return one value for half the inputs and another for the remaining inputs.  Without access to the function itself, how do you know whether it is a constant function or a balanced function?  This is called Deutsch’s problem.</p>
+<p>One of the first quantum algorithms shown to outperform an analogous classical algorithm is the Deutsch-Jozsa algorithm.  This algorithm simply informs us if the function described in Deutsch’s problem is constant or balanced.  In this module you will be guided on coding the Deutsch-Jozsa algorithm using Qiskit.</p>
+<p>M. A. Nielsen and I. L. Chuang, <em>Quantum Computation and Quantum Information</em> (Cambridge University Press, USA, 2011) pp. 34–36.</p>
+<hr class="docutils" />
 <p>The hallmark of this algorithm is the oracle. Let’s think about how to setup an oracle to let us know whether the function is constant. We do this via entanglement, which can be achieved through the straightforward application of CX gates with the Hadamards. If the function is constant, the input should not effect the output, so you will want to make the results the same, which can be achieved via an X gate. If the function is balanced, you’ll apply an X gate to the 1 digits, then a CX to all the qubits with the last qubit as the target, followed by another X gate on the same qubits you assigned them to before. This ensures that all the qubits are entangled with the target qubit.</p>
-<p>Import the following libraries:
-import numpy as np
+<p>Import the following libraries:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>import numpy as np
 from qiskit import *
-from qiskit.tools.visualization import plot_histogram</p>
-<p>Start by defining a function called oracle that takes the integer n as a parameter. In the function create an n+1 qubit circuit. Then create an if-elif statement that checks to see if the function is constant or balanced. Include an option for a random choice between the two cases. When the function is constant, choose whether you want to output all 0 or 1 and enforce the condition.</p>
-<p>If the function is balanced generate a binary number of n characters. iterate over that binary number and if a digit is 1, perform an X gate operation on the corresponding qubit. Then apply a CX to each qubit except the last one and use the last qubit as the target for each CX. Finally, apply an X gate to the same qubits you did previously.</p>
-<p>The function should return the oracle as a gate.</p>
-<p>Now, let’s build a circuit that uses the oracle. The circuit should have n+1 qubits and n classical bits. We will call q0 through qn−1 input qubits and qn
-the output qubit. Apply Hadamards to all the input qubits, and XH to the output qubit. What are the states of each qubit currently?</p>
-<p>Add the oracle you defined earlier to the circuit, apply Hadamards to each input qubit, and then measure the input qubits.</p>
-<p>Does this result make sense? Consider what the oracle is doing to an input qubit and the purpose of the inclusion of the Hadamard before measurement.</p>
-<p>Optionally, run this program on the quantum computer.</p>
-<p>from qiskit import IBMQ
-from qiskit.tools.monitor import job_monitor
-from qiskit.providers.ibmq import least_busy</p>
-<p>IBMQ.load_account()
-IBMQ.providers()</p>
-<p>provider = IBMQ.get_provider(hub=’ibm-q’)
-backend = least_busy(provider.backends(filters=lambda b: b.configuration().n_qubits &gt;= 3 and
-not b.configuration().simulator and b.status().operational==True))
-t_qc = transpile(circuit, backend)
-job = backend.run(t_qc, shots = 1000)
-job_monitor(job)</p>
-<p>result = job.result()
-counts = result.get_counts(circuit)
-plot_histogram(counts)</p>
+from qiskit.tools.visualization import plot_histogram
+</pre></div>
+</div>
+<ul>
+<li><p>Start by defining a function called oracle that takes the integer n as a parameter. In the function create an n+1 qubit circuit. Then create an if-elif statement that checks to see if the function is constant or balanced. Include an option for a random choice between the two cases. When the function is constant, choose whether you want to output all 0 or 1 and enforce the condition.</p></li>
+<li><p>If the function is balanced generate a binary number of n characters. iterate over that binary number and if a digit is 1, perform an X gate operation on the corresponding qubit. Then apply a CX to each qubit except the last one and use the last qubit as the target for each CX. Finally, apply an X gate to the same qubits you did previously.  The function should return the oracle as a gate.</p></li>
+<li><p>Now, let’s build a circuit that uses the oracle. The circuit should have n+1 qubits and n classical bits. We will call q0 through qn−1 input qubits and qn
+the output qubit. Apply Hadamards to all the input qubits, and XH to the output qubit. What are the states of each qubit currently?</p></li>
+<li><p>Add the oracle you defined earlier to the circuit, apply Hadamards to each input qubit, and then measure the input qubits.  Does this result make sense? Consider what the oracle is doing to an input qubit and the purpose of the inclusion of the Hadamard before measurement.</p></li>
+<li><p>Optionally, run this program on the quantum computer.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  from qiskit import IBMQ
+  from qiskit.tools.monitor import job_monitor
+  from qiskit.providers.ibmq import least_busy
+
+  IBMQ.load_account()
+  IBMQ.providers()
+
+  provider = IBMQ.get_provider(hub=&#39;ibm-q&#39;)
+  backend = least_busy(provider.backends(filters=lambda b: b.configuration().n_qubits &gt;= 3 and
+                                     not b.configuration().simulator and b.status().operational==True))
+  t_qc = transpile(circuit, backend)
+  job = backend.run(t_qc, shots = 1000)
+  job_monitor(job)
+
+  result = job.result()
+  counts = result.get_counts(circuit)
+  plot_histogram(counts)
+</pre></div>
+</div>
+</li>
+</ul>
 </div>
 
 

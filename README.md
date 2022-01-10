@@ -1,3 +1,6 @@
+# Introduction
+**************
+
 Begin by installing Qiskit in your preferred manner by following the instructions provided here:
 https://qiskit.org/documentation/getting_started.html
 

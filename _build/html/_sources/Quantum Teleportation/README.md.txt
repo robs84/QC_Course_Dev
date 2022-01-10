@@ -1,3 +1,0 @@
-One of aspect of computing that has become essential is the transmission of information.  In a classical computer this can take the form of copying the state of one bit to another; however, for a quantum computer this process is not so straightforward.  The simple copying of a state from one qubit to another is prohibited, as stated by the no-cloning theorem.  To "copy" the information fromm one qubit to another requires the use of the quantum teleportation protocol.  In this module you will be guided on how to implement a quantum teleportation protocol using Qiskit.  Details of the quantum teleportation protocol can be found in: 
-
-M. A. Nielsen and I. L. Chuang, *Quantum Computation and Quantum Information* (Cambridge University Press, USA, 2011) pp. 26–28.

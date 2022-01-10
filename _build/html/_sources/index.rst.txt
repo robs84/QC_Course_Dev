@@ -12,6 +12,7 @@ Learning quantum software through Qiskit and IBM Quantum
    :maxdepth: 2
    :caption: Coding Exercise Directions
 
+   README
    Entanglement
    States
    Teleportation
