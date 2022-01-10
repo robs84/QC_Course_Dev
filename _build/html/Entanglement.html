@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Entanglement &mdash; QComp 1.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="States" href="States.html" />
+    <link rel="prev" title="Quantum Software I" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> QComp
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Coding Exercise Directions</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Entanglement</a></li>
+<li class="toctree-l1"><a class="reference internal" href="States.html">States</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Teleportation.html">Teleportation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Deutsch-Jozsa.html">Deutsch-Jozsa</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Bernstein-Vazirani.html">Bernstein-Vazirani</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Grover.html">Grover</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Shor.html">Shor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Szedgedy.html">Szedgedy</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">QComp</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Entanglement</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/Entanglement.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="tex2jax_ignore mathjax_ignore section" id="entanglement">
+<h1>Entanglement<a class="headerlink" href="#entanglement" title="Permalink to this headline"></a></h1>
+<hr class="docutils" />
+<p>Introduction to superposition and entanglement will highlight two frequently used gates, the Hadamard and CNOT (or CX) gates.  The Hadamard gate takes a qubit of known state and yields a normalized linear combination of states in that basis.  The CNOT gate will perform a NOT operation on the second qubit if the first (control) qubit is <span class="math notranslate nohighlight">\(|1\rangle\)</span> and will not perform any operation if the control qubit is <span class="math notranslate nohighlight">\(|0\rangle\)</span>, in the computational basis.</p>
+<hr class="docutils" />
+<p>In this module we will look at both superposition and entanglement using the Hadamard and CNOT gates. The learning objective is to gain an intuition about these fundamental operations.</p>
+<ul class="simple">
+<li><p>Begin by generating a quantum circuit composed of a 2-qubit quantum register
+and a 2-bit classical register.</p></li>
+<li><p>To the first qubit apply a Hadamard gate and then apply a controlled X gate
+between the two qubits.  Measure both qubits and comment on the results.</p></li>
+<li><p>Now, repeat the process with a second Hadamard on the first qubit before the CNOT and again after the CNOT. Comment on what happens in both scenarios. This logic can be worked out somewhat trivially using Dirac notation.</p></li>
+</ul>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Quantum Software I" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="States.html" class="btn btn-neutral float-right" title="States" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Robert Smith.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

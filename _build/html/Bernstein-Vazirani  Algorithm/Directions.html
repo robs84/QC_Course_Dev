@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>&lt;no title&gt; &mdash; QComp 1.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> QComp
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Coding Exercise Directions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Entanglement.html">Entanglement</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../States.html">States</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Teleportation.html">Teleportation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Deutsch-Jozsa.html">Deutsch-Jozsa</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Bernstein-Vazirani.html">Bernstein-Vazirani</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Grover.html">Grover</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Shor.html">Shor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Szedgedy.html">Szedgedy</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">QComp</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>&lt;no title&gt;</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/Bernstein-Vazirani  Algorithm/Directions.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p>Import the following libraries:
+from qiskit import *
+from qiskit.tools.visualization import plot_histogram</p>
+<p>Begin by defining a binary string that will serve as your secret number. The string can be however long as you like.</p>
+<p>Now, build a general quantum circuit that contains the same number of qubits as the number of digits your secret number has, and an equal number of classical bits. Apply Hadamard gates to all but the last qubit. Apply an X gate and then
+a Hadamard gate to the last qubit in your register. Consider what function the
+HX serves.</p>
+<p>Next, create a for loop to entangle your last qubit to only those qubits that
+are measuring a 1 on the secret number. What would happened if you entangled
+all the other qubits to the last qubit instead of just the ones measuring 1?</p>
+<p>Finally, apply Hadamard gates to all but the last qubit and measure all bit the last qubit</p>
+<p>Run the simulation with only 1 shot. Was the guess correct?</p>
+<p>Optionally, run this algorithm on a quantum computer. Try 1, 10, 100, and 1000 shots. What if anything changes? Note: it is best to keep your secret number to four digits or less to stay within the quantum computer’s open resource
+allocation.</p>
+<p>from qiskit import IBMQ
+from qiskit.tools.monitor import job_monitor
+from qiskit.providers.ibmq import least_busy</p>
+<p>IBMQ.load_account()
+IBMQ.providers()
+provider = IBMQ.get_provider(hub=’ibm-q’)
+backend = least_busy(provider.backends(filters=lambda b: b.configuration().n_qubits &gt;= 3 and
+not b.configuration().simulator and b.status().operational==True))
+t_qc = transpile(circuit, backend)
+job = backend.run(t_qc, shots = 1000)
+job_monitor(job)
+result = job.result()
+counts = result.get_counts(circuit)
+plot_histogram(counts)</p>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Robert Smith.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

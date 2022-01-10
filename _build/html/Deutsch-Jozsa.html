@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Deutsch-Jozsa &mdash; QComp 1.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Bernstein-Vazirani" href="Bernstein-Vazirani.html" />
+    <link rel="prev" title="Teleportation" href="Teleportation.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> QComp
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Coding Exercise Directions</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Entanglement.html">Entanglement</a></li>
+<li class="toctree-l1"><a class="reference internal" href="States.html">States</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Teleportation.html">Teleportation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Deutsch-Jozsa</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Bernstein-Vazirani.html">Bernstein-Vazirani</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Grover.html">Grover</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Shor.html">Shor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Szedgedy.html">Szedgedy</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">QComp</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Deutsch-Jozsa</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/Deutsch-Jozsa.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="tex2jax_ignore mathjax_ignore section" id="deutsch-jozsa">
+<h1>Deutsch-Jozsa<a class="headerlink" href="#deutsch-jozsa" title="Permalink to this headline"></a></h1>
+<hr class="docutils" />
+<p>The hallmark of this algorithm is the oracle. Let’s think about how to setup an oracle to let us know whether the function is constant. We do this via entanglement, which can be achieved through the straightforward application of CX gates with the Hadamards. If the function is constant, the input should not effect the output, so you will want to make the results the same, which can be achieved via an X gate. If the function is balanced, you’ll apply an X gate to the 1 digits, then a CX to all the qubits with the last qubit as the target, followed by another X gate on the same qubits you assigned them to before. This ensures that all the qubits are entangled with the target qubit.</p>
+<p>Import the following libraries:
+import numpy as np
+from qiskit import *
+from qiskit.tools.visualization import plot_histogram</p>
+<p>Start by defining a function called oracle that takes the integer n as a parameter. In the function create an n+1 qubit circuit. Then create an if-elif statement that checks to see if the function is constant or balanced. Include an option for a random choice between the two cases. When the function is constant, choose whether you want to output all 0 or 1 and enforce the condition.</p>
+<p>If the function is balanced generate a binary number of n characters. iterate over that binary number and if a digit is 1, perform an X gate operation on the corresponding qubit. Then apply a CX to each qubit except the last one and use the last qubit as the target for each CX. Finally, apply an X gate to the same qubits you did previously.</p>
+<p>The function should return the oracle as a gate.</p>
+<p>Now, let’s build a circuit that uses the oracle. The circuit should have n+1 qubits and n classical bits. We will call q0 through qn−1 input qubits and qn
+the output qubit. Apply Hadamards to all the input qubits, and XH to the output qubit. What are the states of each qubit currently?</p>
+<p>Add the oracle you defined earlier to the circuit, apply Hadamards to each input qubit, and then measure the input qubits.</p>
+<p>Does this result make sense? Consider what the oracle is doing to an input qubit and the purpose of the inclusion of the Hadamard before measurement.</p>
+<p>Optionally, run this program on the quantum computer.</p>
+<p>from qiskit import IBMQ
+from qiskit.tools.monitor import job_monitor
+from qiskit.providers.ibmq import least_busy</p>
+<p>IBMQ.load_account()
+IBMQ.providers()</p>
+<p>provider = IBMQ.get_provider(hub=’ibm-q’)
+backend = least_busy(provider.backends(filters=lambda b: b.configuration().n_qubits &gt;= 3 and
+not b.configuration().simulator and b.status().operational==True))
+t_qc = transpile(circuit, backend)
+job = backend.run(t_qc, shots = 1000)
+job_monitor(job)</p>
+<p>result = job.result()
+counts = result.get_counts(circuit)
+plot_histogram(counts)</p>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Teleportation.html" class="btn btn-neutral float-left" title="Teleportation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Bernstein-Vazirani.html" class="btn btn-neutral float-right" title="Bernstein-Vazirani" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Robert Smith.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

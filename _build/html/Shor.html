@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shor &mdash; QComp 1.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Szedgedy" href="Szedgedy.html" />
+    <link rel="prev" title="Grover" href="Grover.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> QComp
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Coding Exercise Directions</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Entanglement.html">Entanglement</a></li>
+<li class="toctree-l1"><a class="reference internal" href="States.html">States</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Teleportation.html">Teleportation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Deutsch-Jozsa.html">Deutsch-Jozsa</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Bernstein-Vazirani.html">Bernstein-Vazirani</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Grover.html">Grover</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Shor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Szedgedy.html">Szedgedy</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">QComp</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Shor</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/Shor.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="tex2jax_ignore mathjax_ignore section" id="shor">
+<h1>Shor<a class="headerlink" href="#shor" title="Permalink to this headline"></a></h1>
+<hr class="docutils" />
+<p>Begin by importing the following libraries:
+import matplotlib.pyplot as plt
+import numpy as np
+from qiskit import *
+from qiskit.visualization import plot_histogram
+from numpy.random import randint
+import pandas as pd
+from fractions import Fraction</p>
+<p>We will begin by defining two variables, the number of counting qubits and some guess number a. For this code, N=15. Consider that for period r, a^(r)modN=1
+and a&lt;N. To start let’s choose a=7.</p>
+<p>Now let’s define a few key functions for Shor’s algorithm. We’ll start with a modular exponentiation function, which is used to map factorization problems
+into period finding problems. Write a function that takes our guess number and some power as parameters. Generate a 4-qubit quantum circuit. For the sake of
+not making this too easy, do not allow a to be a multiple of 3 or 5 and the
+number 14, also 1 isn’t very helpful so exclude that as well. Then use a a
+for-loop to iterate over the range of the power parameter and then use a SWAP
+gate to swap q0 &amp; q1, q1 &amp; q2, and q2 &amp; q3. Note: the order of the SWAP gates matter. Then, still in the for loop, apply an X gate to each qubit. Convert the circuit into a gate and return the control version of that gate. This is hard-coded for a guess of 13, what if our guess was 2? What if it was 8? What if it
+was 11? How would the code change?</p>
+<p>Next, let’s define a quantum Fourier transform, which will elucidate the periodicity of the function. Start with an n-qubit quantum circuit. Iterate
+over the first half of the qubits perform a swap gate between each qubit and
+the corresponding qubit counting from the bottom (i.e. for a 4 qubit circuit,
+q0 &amp; q3 form a pair and q1 &amp; q2 form a pair). Then create a for loop iterating over the qubits using an index (i). In the for loop create another for loop
+that iterates over the index with a dummy index (k) and applies a controlled
+phase (CP) gate with the arguments angle π/2^(i−k), control qubit k, and target qubit i. Then, in the outer for loop apply Hadamards to all “i” qubits. Return
+the circuit.</p>
+<p>Now, let’s apply the functions we created. Start by making a circuit that has 4 more qubits than the counting qubits , and a number of classical bits equal to
+the number of counting qubits. The four additional qubits are for the modular exponentiation function to act on.</p>
+<p>Next, apply Hadamard gates to each counting qubit in the circuit. Then apply an
+X gate on the last (auxiliary) qubits.</p>
+<p>Append the circuit to add the control modular exponentiation and quantum Fourier transform gates. Then measure the counting qubits.</p>
+<p>Simulate the circuit and generate a histogram of the counts.<br />
+Translate the binary numbers into their integer forms. Do they make sense?</p>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Grover.html" class="btn btn-neutral float-left" title="Grover" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Szedgedy.html" class="btn btn-neutral float-right" title="Szedgedy" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Robert Smith.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
